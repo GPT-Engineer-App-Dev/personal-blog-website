@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Home, Info, FileText, Mail } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./layouts/navbar"; // Use the navbar layout
+import { ThemeProvider } from "./components/ThemeProvider"; // Import ThemeProvider
 import Index from "./pages/Index.jsx";
 import About from "./pages/About.jsx";
 import Blog from "./pages/Blog.jsx";
@@ -39,17 +40,19 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="about" element={<About />} />
-              <Route path="blog" element={<Blog />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="add-post" element={<AddPost />} />
-            </Route>
-          </Routes>
-        </Router>
+        <ThemeProvider> {/* Wrap the application with ThemeProvider */}
+          <Router>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Index />} />
+                <Route path="about" element={<About />} />
+                <Route path="blog" element={<Blog />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="add-post" element={<AddPost />} />
+              </Route>
+            </Routes>
+          </Router>
+        </ThemeProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

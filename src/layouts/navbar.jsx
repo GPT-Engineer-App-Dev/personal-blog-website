@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, Package2, Home, Info, FileText, Mail, Plus } from "lucide-react";
+import { CircleUser, Menu, Package2, Home, Info, FileText, Mail, Plus, Sun, Moon } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import Footer from "@/components/Footer";
+import { useTheme } from "@/components/ThemeProvider"; // Import useTheme
+
 const navItems = [
   {
     title: "Home",
@@ -41,17 +43,25 @@ const navItems = [
 ];
 
 const Layout = () => {
+  const { theme, toggleTheme } = useTheme(); // Use theme and toggleTheme
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 justify-between">
         <DesktopNav />
         <MobileNav />
-        <UserMenu />
+        <div className="flex items-center gap-4">
+          <Button variant="outline" size="icon" onClick={toggleTheme}>
+            {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+          <UserMenu />
+        </div>
       </header>
       <main className="flex-grow overflow-auto">
         <Outlet />
       </main>
-    <Footer /> {/* Add the Footer component */}
+      <Footer /> {/* Add the Footer component */}
     </div>
   );
 };
